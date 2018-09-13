@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Effective JavaScript: Frogger</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="splashScreen">
+	<p class="title">Arcade Game Clone</p>
+	<button id="start"  onclick="checkTimer()">Start Game</button>
+</div>
+
+<div class="counter-circle">
+    <div class="counter-number">
+        00:00:00
+    </div>
+</div>
+
+    <script src="js/resources.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+
+var timer = {
+	"hours": 0,
+	"minutes": 0,
+	"seconds": 0,
+};
+var timerRunning = false;
+var mainTimer;
+
+function checkTimer() {
+	if (timerRunning) {
+		// Pause the timer.
+		O(".counter-circle").style.background = "#f80";
+		timerRunning = false;
+		clearInterval(mainTimer);
+	}
+	else {
+		// Start the timer.
+		O(".counter-circle").style.background = "#00f";
+		mainTimer = setInterval(function() {
+			timer["seconds"]++;
+			if (timer["seconds"] > 59) {
+				timer["seconds"] = 0;
+				timer["minutes"]++;
+			}
+			if (timer["minutes"] > 59) {
+				timer["minutes"] = 0;
+				timer["hours"]++;
+			}
+			O(".counter-number").innerHTML = String(timer["hours"]).padStart(2,"0") + ":" + String(timer["minutes"]).padStart(2,"0") + ":" + String(timer["seconds"]).padStart(2,"0");
+		}, 1000);
+		timerRunning = true;
+	}
+}
+
+// Get object
+function O(o) {
+	return document.querySelector(o);
+}
+</script>
+<script>
+	  $(document).ready(function(){
+          $("#start").click(function(){
+            $(".splashScreen").hide();
+          });
+        });
+</script>
+</body>
+</html>
